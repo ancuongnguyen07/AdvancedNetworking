@@ -22,14 +22,15 @@ Links to currently available content:
 ## Assignments
 
 The assignment descriptions and other possible files needed for assignments are
-under the assignments folder in this git repository. The assignments also
-contain program template implemented in Rust that you can be used to help you to
-get started with the assignment. You may use it or implement your own solution
-from scratch.
+under the
+[assignments](https://github.com/PasiSa/AdvancedNetworking/tree/main/assignments)
+folder in this git repository. The assignments also contain program template
+implemented in Rust that you can be used to help you to get started with the
+assignment. You may use it or implement your own solution from scratch.
 
 One option is to clone or fork this repository to your local system, after which
 you can start modifying the provided assignment templates, and maintain your
-work in a forked personal git repository. This makes is easier to synchronize
+work in a forked personal git repository. This makes it easier to synchronize
 your modifications between different systems, for example if you want to develop
 you assignment code in your native system and development tools, but run the
 code in the virtual Linux guest, that is technically a different machine in your
@@ -38,4 +39,8 @@ system.
 The assignments are as follows:
 
 - [Task 1: Simple client](assignments/task-001/task-001.md)
-- _Task 2... (TODO)_
+- [Task 2: TCP server](assignments/task-002/task-002.md)
+- _Task 3: Data transfer using UDP (planned / TODO)_
+- _Task 4: Congestion control and ECN (planned / TODO)_
+- _Task 5: HTTP/3 and QUIC (planned / TODO)_
+- _Maybe some more..._
