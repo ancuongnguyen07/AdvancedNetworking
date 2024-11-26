@@ -97,7 +97,7 @@ Clone `adnet-agent` from git repository, for example in your home directory root
 Go to the `adnet-agent` directory and build the executable from source:
 
     cd adnet-agent
-    cargo adnet-agent
+    cargo build
 
 We will tell more about `adnet-agent` later with the assignments. You can find
 the adnet-agent source code in the [git
@@ -120,3 +120,11 @@ learning Rust. You can start, for example, from the [Rust
 book](https://doc.rust-lang.org/book/). There are plenty of Rust examples in the
 Internet that can be found with some googling. Also ChatGPT knows Rust pretty
 well.
+
+Note that the cargo build and package management system used by Rust does not
+work inside the Mininet virtual network, because it tries to contact resources
+elsewhere in the Internet. Therefore, if you use Rust to develop your
+implementations, instead of using `cargo run` in the Mininet environment you
+should start the program directly from the binary executable you have compiled
+using `cargo build` (typically under `target/debug` folder in your project
+root).
