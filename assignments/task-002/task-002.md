@@ -29,13 +29,13 @@ Follow these steps in your program:
    parallel.
 
 4. When you have finished sending the requested number of bytes, you should
-   output the following to terminal: "`Wrote N bytes of character C`". A new
+   output the following to terminal: "`Wrote N bytes of byte B`". A new
    request may arrive from _adnet-agent_, with similar 5-byte format, to which
    you should respond in the same way as described above. If _adnet-agent_ does
    not need more data from this socket, it closes the TCP connection. Your
    program should therefore be able to handle closing TCP connection without
-   problems. Not that while one connection closes, there may be others still
-   open, performing transmission.
+   problems. Not that while one connection closes, there may be other
+   connections still open, performing transmission.
 
 5. When _adnet-agent_ has closed all connections it opened in the beginning,
    this assignment is complete and successful.
@@ -48,7 +48,7 @@ aalto/simple_topo.py --delay=50ms --bw=0.1`, but you can also try other
 scenarios if you are interested.
 
 You should submit to MyCourses the output of your program, consisting multiple
-lines of the above mentioned "`Wrote N bytes of character C`" messages.
+lines of the above mentioned "`Wrote N bytes of byte B`" messages.
 Calculate also the total number of bytes you sent through all sockets, and
 report that in MyCourses.
 
