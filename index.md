@@ -1,4 +1,4 @@
-# Course materials for Advanced Networking
+# Advanced Networking course
 
 These are the course materials and assignments for the **Advanced
 Networking course (ELEC-E7321)** at Aalto University. Many assignments involve
