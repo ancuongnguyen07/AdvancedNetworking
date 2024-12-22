@@ -62,7 +62,7 @@ The script implements a simple topology with four nodes (titled "lh1", "lh2",
 propagation latency of 200 ms. Mininet command line interface opens, where you
 can run different programs in one of the emulated mininet nodes.
 
-TODO: picture
+![Simple topology](images/simple-topo.png "Simple topology")
 
 For example, typing `lh1 ping rh1` starts a ping tool at "lh1" (at IP address
 10.0.0.1) that sends ICMP echo requests to "rh1" (at IP address 10.0.0.3), that
