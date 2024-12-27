@@ -23,6 +23,12 @@ Links to currently available content:
   installed. Therefore you should be able to run a virtual machine in your
   computer, hosting the Linux guest with needed software.
 
+- **[Socket programming basics](socket-basics.md)**
+
+- **[Server sockets and parallelism](server-sockets.md)** (_TODO_)
+
+- **[Linux networking](linux-tcpip.md)** (_TODO_)
+
 ## Assignments
 
 The assignment descriptions and other possible files needed for assignments are
