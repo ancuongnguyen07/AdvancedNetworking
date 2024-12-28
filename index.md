@@ -1,6 +1,6 @@
 # Advanced Networking course
 
-These are the course materials and assignments for the **Advanced
+This is the course material and assignments for the **Advanced
 Networking course (ELEC-E7321)** at Aalto University. Many assignments involve
 some network programming tasks. The code examples and assignment templates in
 this course are provided in the **[Rust](https://www.rust-lang.org/)** language.
