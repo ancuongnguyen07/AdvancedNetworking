@@ -1,6 +1,9 @@
 /* 	This program opens a connection to given DNS name (or IP address)
 	and service (or port), writes a string to the socket, and reads a string back.
 
+	The tcp_connect function is taken and modified from W.R. Stevens'
+	"Unix Network Programming" book
+
 	To compile: gcc simple-client.c
 	To run: ./a.out <name/address> <service/port> <string>
 */
@@ -61,7 +64,7 @@ int tcp_connect(const char *host, const char *serv)
 		fprintf(stderr, "None of the addresses succeeded\n");
 		sockfd = -1;
 	} else {
-		printf("Connection worked");
+		printf("Connection worked\n");
 	}
 	freeaddrinfo(ressave);
 	return(sockfd);
@@ -86,10 +89,15 @@ int main(int argc, char *argv[])
 	char buf[BUFLEN];
 	strncpy(buf, argv[3], BUFLEN - 1);
 	buf[BUFLEN - 1] = 0;
-	write(sfd, buf, strlen(buf));
+	int n = write(sfd, buf, strlen(buf));
+	if (n < 0) {
+		perror("write");
+	} else if (n < strlen(buf)) {
+		printf("Not everything was written\n");
+	}
 
 	// Read from socket and print it to stdout
-	int n = read(sfd, buf, BUFLEN-1);
+	n = read(sfd, buf, BUFLEN-1);
 	if (n < 0) {
 		perror("read");
 	}

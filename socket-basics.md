@@ -198,6 +198,7 @@ more about the topic.
 
 Next, we will walk through the C example that can be found in [the examples
 directory](https://github.com/PasiSa/AdvancedNetworking/tree/main/examples/c/simple-client.c)
+of our GitHub repository.
 Assuming you have GNU C compiler in your system, you can compile the program on
 your command line terminal by:
 
@@ -269,23 +270,73 @@ family and IPv4 address.
         unsigned long s_addr;  // load with inet_aton()
     };
 
-Essentially, this structure contains 32-bit IPv4 address and 16-bit TCP port. A
-common practice in Internet standardization is, that all binary number larger
-than a byte are encoded in **big endian byte order**, also known as network byte
-order. Most current systems, particularly Intel systems and current Mac
-processors are little-endian, and therefore the byte order needs to be swapped
-before values are passed to the function. In C, functions `ntohs` (for 16 bits)
-and `ntohl` (for 32 bits) are intended for this purpose. For IPv4 addresses we
-are accustomed to see the dotted decimal notation of four 8-bit decimal numbers
-separated by dots, but this is just a representation format for a 32-bit value.
+Essentially, this structure contains a 32-bit IPv4 address and a 16-bit TCP
+port. A common practice in Internet standardization is, that all binary numbers
+larger than a byte are encoded in **big endian byte order**, also known as
+**network byte order**. Most current systems, particularly Intel processors and
+current Apple processors are little-endian, and therefore the byte order needs to
+be swapped before values are passed to the function. In C, functions `ntohs`
+(for 16 bits) and `ntohl` (for 32 bits) are intended for this purpose. These
+functions do the byte order swapping, if program is compiled on a little-endian
+system, or they do nothing, if the program is compiled in a big-endian system.
+For IPv4 addresses we are accustomed to see the dotted decimal notation of four
+8-bit decimal numbers separated by dots, but this is just a representation
+format for a 32-bit value.
 
-## Higher level network APIs
+After `tcp_connect` has established the connection, the `main` function writes a
+string that has been given as command line argument to the TCP connection. The
+return value of the `write` function call tells how many bytes were written, or
+-1 if there was an error. In network programming it is well possible that not
+all of the data can be written with a single write call, especially when writing
+larger amounts of data. In this case, because we know that there are less than
+160 bytes to write, that should not happen however, because the data should fit
+into single TCP segment, and the socket send buffers are empty. What `write`
+actually does, is that it just copies the data to the kernel-side socket
+buffers, from where the TCP starts working on the data, taking congestion
+control and retransmissions into account. The `write` call may block, if the
+socket send buffer is full, until more space becomes available (i.e., the
+receiver TCP has acknowledged it has received some data).
 
-_TODO: C++ does not have specific socket support in standard library. But there
-are library collections such as Boost or Qt that provide easier APIs._
+Finally the program reads data from the same socket and prints it to the
+terminal. Again, if there are much data to read, a single `read` call may not
+read all the content in single call. There are delays in network transmission,
+and possibly retransmissions, which may cause the data delivery to pause for the
+moment, because TCP promises to deliver all data in correct order. The `read`
+call may also block indefinitely, if there is no data to read in the socket
+receive buffer.
 
-_TODO: Rust example_
+## Network programming in Rust
+
+Now we will take a look similar program than above, but implemented in Rust. The
+program is available at [the examples
+directory](https://github.com/PasiSa/AdvancedNetworking/tree/main/examples/rust/simple-client)
+of our GitHub repository. In Rust, like many other modern languages, the network
+API is a little easier to use than the original Posix API in C. TCP socket is
+encapsulated in `TcpStream` class, and the `connect` function can be used to
+create a new socket instance. The `connect` function combines name resolution
+and TCP connection establishment, similarly as we implemented ourselves in the C
+example. Otherwise `read` and `write` calls have similar semantics than in the C
+API: data is copied to and from the socket buffers, and it is possible that the
+functions only read or write part of the expected data, and therefore one needs
+to be prepared to call them repeatedly until all data is read or written.
+
+In Rust, the socket data is passed as `u8` array, that needs to be explicitly
+converted into UTF-8 encoded string, and vice versa. The `main` function returns
+a [**Result** type that is commonly used in
+Rust](https://doc.rust-lang.org/book/ch09-02-recoverable-errors-with-result.html).
+It can have two variants: an `Ok` type return value when function is successful
+or `Err` type return value if there has been an error. No need to use a specific
+integer value, such as -1 to indicate errors anymore! The question mark at the
+end of a function call statement propagates a possible error value to the
+upper-layer function interrupting the current function. In this case it
+terminates the main function and the program execution.
+
+As of now, the standard C++ does not have any object-oriented convenience
+methods for network programming, but the same Posix API is used as with C. There
+are libraries, however, that provide easier methods for network programming, such
+as [Boost Asio](https://think-async.com/Asio/) or
+[Qt](https://doc.qt.io/qt-6/qtnetwork-programming.html).
 
 ## Socket buffers and flow control
 
-_TODO_
+_TODO: picture of the userland and kernel-side buffers_
