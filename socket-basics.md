@@ -339,4 +339,31 @@ as [Boost Asio](https://think-async.com/Asio/) or
 
 ## Socket buffers and flow control
 
-_TODO: picture of the userland and kernel-side buffers_
+The below picture illustrates a sending and receiving system, and the involved
+buffers. After socket is created and opened, the `write` call copies data to the
+kernel-side socket buffer. After this the TCP protocol implementation starts
+sending data one or more packets at a time, depending on, for example, the
+current congestion window. TCP headers and IP headers will be added to the
+beginning of the packet before it is sent. Currently most packets in the
+Internet are 1500 bytes long, this means that each TCP segment can include
+maximum of 1460 bytes of data, depending on options used in the header.
+
+![Sockets and buffers](images/buffers.png "Sockets and buffers")
+
+After TCP segment is sent, it is not yet removed from the send buffer, because
+it is possible that packet is lost in the network and TCP may need to retransmit
+it. When the segment arrives at the receiver, it is placed in the socket receive
+buffer, until application calls `read` to copy data from receive buffer to
+application. At this point the receive buffer space can be released. When the
+segment arrives, the TCP receiver sends an acknowledgment of received data. When
+acknowledgment arrives at the sender, it can remove the data from the socket
+send buffer. Note that reception of acknowledgment does not mean that receiving
+application has yet read the data from the buffer. The acknowledgment contains
+also a 16-bit window advertisement field, that tells how much space there is
+still available in the socket receive buffer. If the available buffer goes to
+zero, TCP sender cannot send any more data, until there is more room.
+
+TCP promises to deliver data reliably in order. Therefore, if a packet is lost,
+the following segments arriving at receive buffer cannot be delivered to the
+application until the missing segment is successfully delivered. In some cases
+this may cause significant delay in data delivery.
