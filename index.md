@@ -25,7 +25,7 @@ Links to currently available content:
 
 - **[Socket programming basics](socket-basics.md)**
 
-- **[Server sockets and parallelism](server-sockets.md)** (_TODO_)
+- **[Server sockets and concurrent connections](server-sockets.md)**
 
 - **[Linux networking](linux-tcpip.md)** (_TODO_)
 
