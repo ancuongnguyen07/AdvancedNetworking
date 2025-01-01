@@ -107,12 +107,12 @@ not be able to return immediately. The Posix C API has functions such as
 `select` or `poll` that can be used to wait simultaneously multiple event from
 any of the specified sockets.
 
-In Rust, [**mio**](https://docs.rs/crate/mio) is a library (or "crate" in Rust
-terminology) that encapsulates this functionality into fairly easy set of
-functions. Our next example is
+In Rust, [mio](https://docs.rs/crate/mio) is a library (or "crate" in Rust
+terminology) that encapsulates the non-blocking socket operation into fairly
+easy set of functions. Our next example is
 "[iterative-server](https://github.com/PasiSa/AdvancedNetworking/tree/main/examples/rust/iterative-server/src/main.rs)"
 that demonstrates the use of _mio_ (you may want to open the code in a parallel
-window while reading the following). The server just reads incoming data from
+window while reading this section). The server just reads incoming data from
 socket and echoes it back. Different from the earlier implementation, the server
 does not close the socket after writing data, but after responding to client, it
 continues waiting for more data, until the client closes the connection.
@@ -165,6 +165,25 @@ the main server loop. Earlier we have mostly used the `?` operator that
 propagates the possible error up in the call stack, which would have caused
 termination of the program.
 
+The `write` call shows another way of checking for an error outcome, in case we
+are not interested in the exact Ok return value. A better alternative, in
+addition to handling the write call through the writable event, would be to
+check how many bytes were actually written, and prepare for the case when only
+part of the data was written. Again, lazy coding.
+
+You can test the program by first starting the server in the same way as before:
+
+    cargo run -- 0.0.0.0:2000
+
+Then, open more than one terminal windows where you start a netcat session in
+each, opening multiple connections to server:
+
+    nc 127.0.0.1 2000
+
+Try typing different things to different terminal windows, closing netcat in
+some windows by Ctrl-D (Hang-up of connection) or Ctrl-C (Interrupt netcat), and
+then restarting netcat.
+
 ### Multithreaded operation
 
 _TODO_
@@ -172,7 +191,7 @@ _TODO_
 ### Async / await
 
 A third option is to apply collaborative concurrency with async/await method
-provided by the **[Tokio](https://tokio.rs/)**. We will skip it from this
-material for now (but something will be available later). However, there is a
-[Rust book about **Asynchronous
+provided by **[Tokio](https://tokio.rs/)**. We will skip the details from this
+material for now (but something might be available later, who knows). However,
+there is a [Rust book about **Asynchronous
 Programming**](https://rust-lang.github.io/async-book/) about this topic.

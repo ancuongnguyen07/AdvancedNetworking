@@ -49,6 +49,4 @@ The assignments are as follows:
 - [Task 1: Simple client](assignments/task-001/task-001.md)
 - [Task 2: TCP server](assignments/task-002/task-002.md)
 - [Task 3: Data transfer using UDP](assignments/task-003/task-003.md)
-- _Task 4: Congestion control and ECN (planned / TODO)_
-- _Task 5: HTTP/3 and QUIC (planned / TODO)_
-- _Maybe some more..._
+- _TODO: some more will be available..._

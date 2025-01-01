@@ -1,7 +1,8 @@
 /* Open TCP server socket, bind it to given address, and wait incoming connections.
- * Handle incoming connections one at the time: read some data from socket,
- * and echo it back. Bind to "0.0.0.0:<port>" if connections are allowed from any
- * interface.
+ * Echo back all data received from the connection. The connections are kept open
+ * until the client closes them, i.e., we must handle multiple simultaneous
+ * connections at a time. Bind to "0.0.0.0:<port>" if connections are allowed
+ * from any interface.
  * 
  * Usage: cargo run -- <IP>:<port>
  */
