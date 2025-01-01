@@ -309,8 +309,9 @@ receive buffer.
 
 Now we will take a look similar program than above, but implemented in Rust. The
 program is available at [the examples
-directory](https://github.com/PasiSa/AdvancedNetworking/tree/main/examples/rust/simple-client)
-of our GitHub repository. In Rust, like many other modern languages, the network
+directory](https://github.com/PasiSa/AdvancedNetworking/tree/main/examples/rust/simple-client/src/main.rs)
+of our GitHub repository (you may want to open the code in parallel window while
+reading this section). In Rust, like many other modern languages, the network
 API is a little easier to use than the original Posix API in C. TCP socket is
 encapsulated in `TcpStream` class, and the `connect` function can be used to
 create a new socket instance. The `connect` function combines name resolution

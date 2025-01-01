@@ -27,8 +27,6 @@ Links to currently available content:
 
 - **[Server sockets and concurrent connections](server-sockets.md)**
 
-- **[Linux networking](linux-tcpip.md)** (_TODO_)
-
 ## Assignments
 
 The assignment descriptions and other possible files needed for assignments are
