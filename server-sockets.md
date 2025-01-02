@@ -100,7 +100,7 @@ strategies to design such server.
 
 ### Iterative event handling
 
-Perhaps the easiest approach is to handle all sockets in an iterative loop in a
+Multiple sockets can be handled one at a time in an iterative loop in a
 single thread. Sockets can be made **non-blocking** in which case they return a
 specific **WouldBlock** error whenever the call (e.g. `read` or `write`) would
 not be able to return immediately. The Posix C API has functions such as
@@ -186,7 +186,38 @@ then restarting netcat.
 
 ### Multithreaded operation
 
-_TODO_
+Sometimes an easier option is to spawn a separate thread for each client. As we
+see in the
+"[threaded-server](https://github.com/PasiSa/AdvancedNetworking/tree/main/examples/rust/threaded-server/src/main.rs)"
+example, for our simple echo server the code indeed is rather short and simple,
+compared to the iterative server. However, there are a few things to consider
+before applying multiple threads for server logic. First, spawning a separate
+thread is a little heavier operation, and involves the operating system that
+manages the threads in the system. In addition, if application logic requires
+the different threads to access shared data, one should be careful that the
+concurrent operations do not cause inconsistencies in data modifications, for
+example by preventing concurrent modifications of critical shared data by
+semaphores. This is not the case in our example, though, where each session is
+independent of each other.
+
+As before our `main` function starts by parsing the address to bind to from
+command line arguments and binds the socket. The main loop is very simple: it
+just waits in the `accept` call until a new connection arrives, and then spawns
+a new thread for processing the client in `process_client` function. The
+ownership of the `socket` and `address` variables is moved to the new thread
+with `move` keyword. After this the main thread starts waiting for the next
+connection. The thread `spawn` function would return a handle to the thread that
+the main thread could use for interacting with the spawned threads, for example,
+to wait for the completion of an earlier spawned thread. In this case of a
+simple echo server, we do not have use for it, though. The threads live their
+own life independently. When the program is terminated, all spawned threads will
+also die.
+
+The `process_client` function is also slightly simpler, although quite similar
+to the iterative server case, because now we do not need to handle Mio and its
+events. The read and write calls may block, but they only block the current
+thread and therefore do not harm the other clients or prevent listening socket
+from accepting new connections.
 
 ### Async / await
 
