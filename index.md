@@ -29,6 +29,8 @@ Links to currently available content:
   installed. Therefore you should be able to run a virtual machine in your
   computer, hosting the Linux guest with needed software.
 
+- **[Wireshark and Mininet](wireshark.md)**
+
 - **[Socket programming basics](socket-basics.md)**
 
 - **[Server sockets and concurrent connections](server-sockets.md)**
