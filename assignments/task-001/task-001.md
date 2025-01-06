@@ -5,7 +5,8 @@ to the `adnet-agent` server assuming the `simple_topo` topology in our Mininet
 setup. After you send initial control message `TASK-001 keyword` to the server,
 it will respond by sending a large message consisting of alphanumeric characters
 to the same socket. Replace "keyword" with the word that is randomly given to
-you in MyCourses task description (if you are an Aalto student). After server
+you in MyCourses task description. You should read all data the server sends.
+After server
 has finished sending data, it closes the TCP connection. Your task is to repeat
 this assignment applying different properties on the bottleneck link, and report
 the results following the instructions given below.
@@ -34,8 +35,8 @@ You should repeat the assignment applying the following four scenarios:
    scenarios? In addition to delay, bandwidth and loss rate, you can also limit
    the packet queue size at the bottleneck link (argument `max_queue_size`).
 
-Write a report that describes the following details. If you are an Aalto
-student, the report, and answers to the following questions need to be submitted
+Write a report that describes the following details. The report, and
+answers to the following questions need to be submitted
 in MyCourses for grading. For all the four afore-mentioned scenarios, the
 answers to the following three questions should be the same:
 
@@ -67,6 +68,8 @@ the `simple_topo` script in each of the four scenarios:
   10.0.0.3)
 - On window representing "rh1": start `adnet-agent` server. It will be listening
   to TCP connections at IP address 10.0.0.3, port 12345
-- On window representing "lh1", start Wireshark: `wireshark &`. Start capturing
-  traffic on "lh1-eth0" interface
+- On window representing "rh1", start Wireshark: `wireshark &`. Start capturing
+  traffic on "rh1-eth0" interface. Because in this case server is doing the
+  transmission of most data, analyzing e.g. round-trip times and retransmissions
+  is easier when observing the server side of the connection.
 - Start your client implementation on window representing "lh1"

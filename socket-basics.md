@@ -321,9 +321,20 @@ API: data is copied to and from the socket buffers, and it is possible that the
 functions only read or write part of the expected data, and therefore one needs
 to be prepared to call them repeatedly until all data is read or written.
 
-In Rust, the socket data is passed as `u8` array, that needs to be explicitly
-converted into UTF-8 encoded string, and vice versa. The `main` function returns
-a [**Result** type that is commonly used in
+In Rust, the data read and written to socket is passed as `u8` array that
+contains the data as 8-bit unsigned integers. If we assume that the data is
+actually text, and we would like to operate it as string, the data needs to be
+explicitly converted into string, and vice versa, because Rust is specific about
+data types. In our example program, function `as_bytes()` converts a string into
+a byte slice (a reference to a byte array) that can be passed as an argument to
+`write` call. Conversely, to convert an array of bytes into string, we can use
+`std::str::from_utf8`, assuming UTF-8 encoding. Note that the program needs to
+prepare for the situation that the conversion is not successful. In our example
+we are optimistic: `unwrap` causes the program to terminate in panic in such
+case. Usually in production code, one should process the errors in more robust
+way.
+
+The `main` function returns a [**Result** type that is commonly used in
 Rust](https://doc.rust-lang.org/book/ch09-02-recoverable-errors-with-result.html).
 It can have two variants: an `Ok` type return value when function is successful
 or `Err` type return value if there has been an error. No need to use a specific

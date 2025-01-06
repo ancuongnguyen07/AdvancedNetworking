@@ -1,19 +1,25 @@
 # Advanced Networking course
 
-This is the course material and assignments for the **Advanced
-Networking course (ELEC-E7321)** at Aalto University. Many assignments involve
-some network programming tasks. The code examples and assignment templates in
-this course are provided in the **[Rust](https://www.rust-lang.org/)** language.
+These pages contain the material and assignments for the hands-on programming
+and measurement tasks of the **Advanced Networking course (ELEC-E7321)** at
+Aalto University. The assignment descriptions refer to MyCourse learning
+platform available for students enrolled on the course. If you are not enrolled
+on the course, but are just interested on the topic, feel free to try out the
+tasks nevertheless.
+
+The code examples and assignment templates in
+this material are provided in the **[Rust](https://www.rust-lang.org/)** language.
 However, you can use also other languages for your implementations and
 experimentation, such as C or C++, or even Python. JavaScript is not a viable
 option on this course.
 
-_Currently the material is work in progress. You will find more content
-appearing constantly in this repository._
-
-The GitHub repository for materials is
-[here](https://github.com/PasiSa/AdvancedNetworking). If you find something to
-correct or add, feel free to drop an issue or pull request in the repository.
+Note that the material is still somewhat under development and there will be
+changes and additions coming during the course. The GitHub repository for the
+material is [**here**](https://github.com/PasiSa/AdvancedNetworking). If you
+find something to correct or add, feel free to drop an [GitHub
+issue](https://github.com/PasiSa/AdvancedNetworking/issues/new) or pull request
+in the repository, or just send mail to the author (contact info is in GitHub
+profile).
 
 Links to currently available content:
 
@@ -34,7 +40,7 @@ under the
 [assignments](https://github.com/PasiSa/AdvancedNetworking/tree/main/assignments)
 folder in this git repository. The assignments also contain program templates
 implemented in Rust that can be used to help you to get started with the
-assignment. You may use it or implement your own solution from scratch.
+assignment. You may use the templates or implement your own solution from scratch.
 
 One option is to clone or fork this repository to your local system, after which
 you can start modifying the provided assignment templates, and maintain your
@@ -49,4 +55,4 @@ The assignments are as follows:
 - [Task 1: Simple client](assignments/task-001/task-001.md)
 - [Task 2: TCP server](assignments/task-002/task-002.md)
 - [Task 3: Data transfer using UDP](assignments/task-003/task-003.md)
-- _TODO: some more will be available..._
+- _some more may be coming here..._

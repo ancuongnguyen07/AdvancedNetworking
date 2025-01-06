@@ -6,21 +6,45 @@ Many of the exercises on this course use the [Mininet
 emulator](https://mininet.org/) to build virtual network environments with given
 topologies and characteristics. Mininet requires Linux to run. If you do not
 have a Linux system available, you will need a virtual machine hosting the Linux
-system. VirtualBox is a commonly used, free virtualization environment. See
-instructions from the Linux course for more detailed installation instructions
-and troubleshooting on installing the virtual environment.
+system.
 
-If you are using MacOS with the the ARM processors, UTM (a QEMU installation for
-Mac) should work. After installing UTM, you should find the Ubuntu 22.04 image
-provided in UTM catalogue, which should work according to instructions in this
-chapter. If you are using Windows, you should note that Windows Subsystem for
-Linux does not work with mininet and other networking tools used on this course,
-but you'll need an actual virtual machine installation (such as VirtualBox).
+There are different options for virtual machine, including:
+
+- [VirtualBox](https://www.oracle.com/virtualization/technologies/vm/downloads/virtualbox-downloads.html)
+  is available for all common operating systems. After installing the VirtualBox
+  packages, you should install the actual operating system from iso image. We
+  have used [Ubuntu 24.04](https://ubuntu.com/download). Note that the desktop
+  version is not available for Mac, so Mac users should rather use the Ubuntu
+  server version, or rather, use UTM that is described below.
+
+- [VMware](https://www.vmware.com/products/desktop-hypervisor/workstation-and-fusion)
+  is another option that should be available for major operating systems.
+
+- [Parallels](https://www.parallels.com/products/desktop/) is a good option for
+  Mac users who have money (it is not freely available).
+
+- [UTM](https://mac.getutm.app/) is a free alternative for Mac users. After
+  installing UTM, you should find the [Ubuntu 22.04
+  image](https://mac.getutm.app/gallery/ubuntu-20-04) provided in UTM gallery,
+  that you can install.
+
+After installing the virtual machine software, and operating system image, you
+should be able to install and use the needed networking tools, according to the
+instructions in this chapter.
+
+If you are using Windows, you should note that Windows Subsystem for Linux does
+not work (at least very easily) with mininet and other networking tools used on
+this course, but you'll need an actual virtual machine installation.
 
 The course assignments and software are tested on a recent Ubuntu Linux
 distribution, but other distributions may work as well. Mininet is mostly
 implemented using Python, and we have used Python version 3.12 for testing. The
 rest of the instructions assume Ubuntu distribution.
+
+We assume that you are at least elementary familiar with the basic operation of
+the command line interface. In your Ubuntu system, locate "Terminal" to open a
+command line terminal window, where you start working on the following
+instructions.
 
 After getting your virtual machine up and running, you should update the Ubuntu
 packages and install a few other packages needed by the tools in this course:
@@ -29,14 +53,6 @@ packages and install a few other packages needed by the tools in this course:
     sudo apt-get upgrade
     sudo apt install git python-is-python3 help2man pip net-tools
     sudo apt install telnet cgroup-tools cgroupfs-mount iputils-ping
-
-You should also set up ssh keys on your virtual machine, that are needed
-for git access. New keys can be generated using `ssh-keygen` command on command
-line terminal. You can use default options to questions `ssh-keygen` presents.
-Copy the public key (`$HOME/.ssh/id_rsa.pub`) to your GitHub settings: "Settings
-/ SSH and GPG keys" from the top right corner in GitHub web interface, then
-press "New SSH key", and copy the public key to the correct text field. You can
-output the key on Linux terminal by typing `cat $HOME/.ssh/id_rsa.pub`.
 
 Clone Mininet from git repository. On this course we use our own fork that has a
 few additional scripts and modifications compared to the original parent
@@ -92,7 +108,7 @@ Then follow instructions appearing on terminal.
 Clone `adnet-agent` from git repository, for example in your home directory root
 
     cd $HOME
-    git clone git@github.com:PasiSa/adnet-agent.git
+    git clone https://github.com/PasiSa/adnet-agent.git
 
 Go to the `adnet-agent` directory and build the executable from source:
 
@@ -102,6 +118,15 @@ Go to the `adnet-agent` directory and build the executable from source:
 We will tell more about `adnet-agent` later with the assignments. You can find
 the adnet-agent source code in the [git
 repository](https://github.com/PasiSa/adnet-agent).
+
+**Optional:** If you want to use git for managing your own code development, you
+should also set up ssh keys on your virtual machine, that are needed for git
+access. New keys can be generated using `ssh-keygen` command on command line
+terminal. You can use default options to questions `ssh-keygen` presents. Copy
+the public key (`$HOME/.ssh/id_rsa.pub`) to your GitHub settings: "Settings /
+SSH and GPG keys" from the top right corner in GitHub web interface, then press
+"New SSH key", and copy the public key to the correct text field. You can output
+the key on Linux terminal by typing `cat $HOME/.ssh/id_rsa.pub`.
 
 Some of the course assignments involve programming network software. To help you
 get started with the assignments, the course material contains code examples
@@ -127,4 +152,6 @@ elsewhere in the Internet. Therefore, if you use Rust to develop your
 implementations, instead of using `cargo run` in the Mininet environment you
 should start the program directly from the binary executable you have compiled
 using `cargo build` (typically under `target/debug` folder in your project
-root).
+root), for example:
+
+    target/debug/adnet-agent
