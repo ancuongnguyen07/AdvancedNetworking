@@ -11,11 +11,7 @@ system.
 There are different options for virtual machine, including:
 
 - [VirtualBox](https://www.oracle.com/virtualization/technologies/vm/downloads/virtualbox-downloads.html)
-  is available for all common operating systems. After installing the VirtualBox
-  packages, you should install the actual operating system from iso image. We
-  have used [Ubuntu 24.04](https://ubuntu.com/download). Note that the desktop
-  version is not available for Mac, so Mac users should rather use the Ubuntu
-  server version, or rather, use UTM that is described below.
+  is available for all common operating systems.
 
 - [VMware](https://www.vmware.com/products/desktop-hypervisor/workstation-and-fusion)
   is another option that should be available for major operating systems.
@@ -28,9 +24,22 @@ There are different options for virtual machine, including:
   image](https://mac.getutm.app/gallery/ubuntu-20-04) provided in UTM gallery,
   that you can install.
 
-After installing the virtual machine software, and operating system image, you
-should be able to install and use the needed networking tools, according to the
-instructions in this chapter.
+After installing the virtual machine, you should install the actual operating
+system from an ISO image. We have used [Ubuntu
+24.04](https://ubuntu.com/download) desktop. Note that the Ubuntu 24.04 desktop
+version is not available for ARM-based Mac, so Mac users should rather find the
+ARM-based version of Ubuntu 24.04 server, and then after booting the server
+installation, separately install Ubuntu desktop tools with `apt`, and then
+reboot again the virtual machine:
+
+    sudo apt install ubuntu-desktop
+    sudo reboot
+
+Note, that the above is not needed, if you use UTM that provides a separate
+image in its gallery.
+
+As the next step, you install and use the needed networking tools, according to
+the instructions in this chapter.
 
 If you are using Windows, you should note that Windows Subsystem for Linux does
 not work (at least very easily) with mininet and other networking tools used on
@@ -51,7 +60,7 @@ packages and install a few other packages needed by the tools in this course:
 
     sudo apt-get update
     sudo apt-get upgrade
-    sudo apt install git python-is-python3 help2man pip net-tools
+    sudo apt install git python-is-python3 help2man pip python3-pip net-tools
     sudo apt install telnet cgroup-tools cgroupfs-mount iputils-ping
 
 Clone Mininet from git repository. On this course we use our own fork that has a
