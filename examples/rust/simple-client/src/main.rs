@@ -24,9 +24,12 @@ fn main() -> Result<(), Box<dyn Error>> {
     // The connect function does both name resolution and connection establishment.
     let mut socket = TcpStream::connect(&args[1])?;
 
+    // as_bytes() converts the string from command line argument into a u8 byte slice.
     // If write produces an error, we exit the main function immediately.
     let n = socket.write(args[2].as_bytes())?;
     if n < args[2].len() {
+        // We could not write everything.
+        // In reality, we should call write() again with the rest of the data.
         println!("Not everything was written");
     }
 

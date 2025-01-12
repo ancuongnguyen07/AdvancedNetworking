@@ -15,11 +15,11 @@ option on this course.
 
 Note that the material is still somewhat under development and there will be
 changes and additions coming during the course. The GitHub repository for the
-material is [**here**](https://github.com/PasiSa/AdvancedNetworking). If you
+material is **[available](https://github.com/PasiSa/AdvancedNetworking)**. If you
 find something to correct or add, feel free to drop an [GitHub
-issue](https://github.com/PasiSa/AdvancedNetworking/issues/new) or pull request
-in the repository, or just send mail to the author (contact info is in GitHub
-profile).
+issue](https://github.com/PasiSa/AdvancedNetworking/issues/new)
+in the repository, or just send [E-mail](mailto:pasi.sarolahti@aalto.fi) to the
+author.
 
 Links to currently available content:
 

@@ -2,8 +2,8 @@
 
 ## Setting up Mininet
 
-Many of the exercises on this course use the [Mininet
-emulator](https://mininet.org/) to build virtual network environments with given
+Many of the exercises on this course use the **[Mininet
+emulator](https://mininet.org/)** to build virtual network environments with given
 topologies and characteristics. Mininet requires Linux to run. If you do not
 have a Linux system available, you will need a virtual machine hosting the Linux
 system.
@@ -100,6 +100,35 @@ it is starting up. In this case some of the network state may end up in
 unfinished state that prevents mininet from being started again. In such
 situation you can clean up the network state by typing `sudo mn -c`, and try to
 start mininet after that.
+
+## Working over ssh from the host machine
+
+**Optional:** When working with a virtual machine, it may be more convenient to
+use the tools and terminal available in the host machine, and access the virtual
+machine using a ssh connection between the host and virtual machine. First, the
+virtual machine needs ssh server installed and started (sometimes this might
+have been done already with the initial installation of the Linux distribution):
+
+    sudo apt install openssh-server
+    sudo systemctl start ssh
+    sudo systemctl enable ssh
+
+After this you should find the IP addressed the virtual guest system uses
+internally. Type
+
+    ip addr show
+
+and locate the IP address associated with a network interface. It should be an
+address in the private address space, for example starting with 10.x.x.x or
+192.168.x.x. This is the address you can use when connecting to the virtual
+guest OS using ssh after this:
+
+    ssh username@ip.address
+
+Particularly, the popular development environment _VScode_ can connect to a
+remote host using ssh, in which case one can do development using the locally
+installed VScode in the host machine that actually operates on the files in the
+remote machine over a ssh connection.
 
 ## Setting up the course exercise software
 

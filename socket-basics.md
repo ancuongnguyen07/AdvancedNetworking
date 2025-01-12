@@ -1,7 +1,5 @@
 # Socket programming basics
 
-_Warning: this section is still work in progress, and not yet complete._
-
 Socket is the basic programming interface between user space applications and
 operating system. Commonly, socket encapsulates one communication session
 between the local application and a remote peer, for example in most common
