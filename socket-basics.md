@@ -332,8 +332,9 @@ we are optimistic: `unwrap` causes the program to terminate in panic in such
 case. Usually in production code, one should process the errors in more robust
 way.
 
-The `main` function returns a [**Result** type that is commonly used in
-Rust](https://doc.rust-lang.org/book/ch09-02-recoverable-errors-with-result.html).
+The `main` function returns a
+**[Result](https://doc.rust-lang.org/book/ch09-02-recoverable-errors-with-result.html)**
+type that is commonly used in Rust.
 It can have two variants: an `Ok` type return value when function is successful
 or `Err` type return value if there has been an error. No need to use a specific
 integer value, such as -1 to indicate errors anymore! The question mark at the
@@ -344,8 +345,56 @@ terminates the main function and the program execution.
 As of now, the standard C++ does not have any object-oriented convenience
 methods for network programming, but the same Posix API is used as with C. There
 are libraries, however, that provide easier methods for network programming, such
-as [Boost Asio](https://think-async.com/Asio/) or
-[Qt](https://doc.qt.io/qt-6/qtnetwork-programming.html).
+as **[Boost Asio](https://think-async.com/Asio/)** or
+**[Qt](https://doc.qt.io/qt-6/qtnetwork-programming.html)**.
+
+## Byte order conversion and data alignment
+
+As discussed above, 16-, 32- and 64-byte number values can be encoded either in
+big-endian or little-endian byte order in a computer system. While currently the
+little-endian byte order is prevalent in commonly used computers, this was not
+always so earlier, and by common agreement in most protocol specifications these
+values are encoded in big-endian byte order, also known as network byte order.
+
+In Rust, the byte order conversions between big-endian and little-endian
+integers can be done using `from_le_bytes`, `from_be_bytes`, `to_le_bytes` and
+`to_be_bytes` functions. When writing a portable program, you generally cannot
+assume whether it is compiled in little-endian or big-endian architecture.
+Therefore there are also functions `to_ne_bytes` and `from_ne_bytes`, to
+represent "native byte order". For example,
+**[here](https://doc.rust-lang.org/std/primitive.u32.html#method.from_be_bytes)**
+you can find documentation and examples for these functions for unsigned 32-bit
+integers.
+
+In addition to byte order, systems may differ in how they place variables in
+memory, especially in data structures. For example, when writing a binary
+protocol header into network, one might just make a structure and write its
+contents as such. However, when there are fields of different lengths inside a
+data structure, there maybe be empty padding spaces between the fields to force
+the larger number values at word boundaries in computer memory, to make their
+processing more efficient. Below picture illustrates the situation.
+
+![Data struct alignment](images/struct-alignment.png "Data struct alignment")
+
+A simple, but inefficient, way to write such structure could be to do it field
+by field as separate write calls. However both Rust and C have a way to tell the
+compiler that padding is not desired for a particular structure, but the fields
+should be "packed" to have no such spaces between them. Therefore, a more
+efficient way is to declare such structure and write its contents in a single
+write call to the network after necessary byte order conversions.
+
+Here is a simple example
+"**[tcpheader](https://github.com/PasiSa/AdvancedNetworking/tree/main/examples/rust/tcpheader/src/main.rs)**",
+that introduces the TCP header fields in a Rust structure, and then converts it
+to u8 byte array that can be written to the network, and vice-versa. In Rust one
+can use `#[repr(C, packed)]` in front of the structure, to tell that it should
+be built to be compatible with C binary interface, and that the fields should be
+packed to not have padding. Later the code uses the byte order conversion
+functions separately for each field to translate them to network byte order and
+vice versa. As a reminder, TCP header is illustrated below (from **[RFC
+9293](https://datatracker.ietf.org/doc/html/rfc9293)**):
+
+![TCP header](images/tcp-header.png "TCP header")
 
 ## Socket buffers and flow control
 
