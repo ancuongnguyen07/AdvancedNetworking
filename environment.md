@@ -61,7 +61,7 @@ packages and install a few other packages needed by the tools in this course:
     sudo apt-get update
     sudo apt-get upgrade
     sudo apt install git python-is-python3 help2man pip python3-pip net-tools
-    sudo apt install telnet cgroup-tools cgroupfs-mount iputils-ping
+    sudo apt install telnet cgroup-tools cgroupfs-mount iputils-ping curl
 
 Clone Mininet from git repository. On this course we use our own fork that has a
 few additional scripts and modifications compared to the original parent
