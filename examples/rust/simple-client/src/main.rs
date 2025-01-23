@@ -1,6 +1,6 @@
 /* Open TCP socket, send some data and receive data back.
  * 
- * Usage: cargo run -- <IP>:<port> <string>
+ * Usage: cargo run -- <name/address>:<port> <string>
  */
 
 use std::{
