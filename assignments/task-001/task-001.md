@@ -49,7 +49,7 @@ In addition, for each of the above four scenarios, report the following:
 
 - How long does it take to complete the transfer? Give exact (millisecond
   granularity) answer, as measured by your program
-- How many round-trip times did the transfer take? If you think there were TCP
+- How many round-trips did the transfer take? If you think there were TCP
   retransmission timeouts, tell also that.
 - How many retransmissions did TCP do during the transmission?
 

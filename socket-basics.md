@@ -377,16 +377,16 @@ processing more efficient. Below picture illustrates the situation.
 ![Data struct alignment](images/struct-alignment.png "Data struct alignment")
 
 A simple, but inefficient, way to write such structure could be to do it field
-by field as separate write calls. However both Rust and C have a way to tell the
+by field as separate write calls. However, both Rust and C have a way to tell the
 compiler that padding is not desired for a particular structure, but the fields
 should be "packed" to have no such spaces between them. Therefore, a more
-efficient way is to declare such structure and write its contents in a single
+efficient way is to declare a packed structure and write its contents in a single
 write call to the network after necessary byte order conversions.
 
-Here is a simple example
+Take a look at a simple example
 "**[tcpheader](https://github.com/PasiSa/AdvancedNetworking/tree/main/examples/rust/tcpheader/src/main.rs)**",
 that introduces the TCP header fields in a Rust structure, and then converts it
-to u8 byte array that can be written to the network, and vice-versa. In Rust one
+to a `u8` byte array that can be written to the network, and vice versa. In Rust one
 can use `#[repr(C, packed)]` in front of the structure, to tell that it should
 be built to be compatible with C binary interface, and that the fields should be
 packed to not have padding. Later the code uses the byte order conversion
