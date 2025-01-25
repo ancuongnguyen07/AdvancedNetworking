@@ -35,6 +35,8 @@ Links to currently available content:
 
 - **[Server sockets and concurrent connections](server-sockets.md)**
 
+- **[Small code examples in C and Rust](examples/index.md)**
+
 ## Assignments
 
 The assignment descriptions and other possible files needed for assignments are
