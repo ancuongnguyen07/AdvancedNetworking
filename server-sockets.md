@@ -1,4 +1,4 @@
-# Server sockets and concurrent connections
+# Server programming and concurrent connections
 
 ## Active and passive sockets
 
@@ -36,7 +36,7 @@ concurrency and non-blocking operation is taken care of appropriately.
 ## Example: simple server
 
 We will now take a look at
-"[simple-server](https://github.com/PasiSa/AdvancedNetworking/tree/main/examples/rust/simple-server/src/main.rs)"
+**[simple-server](https://github.com/PasiSa/AdvancedNetworking/tree/main/examples/rust/simple-server/src/main.rs)**
 example in our GitHub repository, probably the simplest server implementation
 possible. This program accepts incoming connections one at the time, reads any
 data sent by the accepted client, and then echoes the data back. After this the
@@ -110,7 +110,7 @@ any of the specified sockets.
 In Rust, [mio](https://docs.rs/crate/mio) is a library (or "crate" in Rust
 terminology) that encapsulates the non-blocking socket operation into fairly
 easy set of functions. Our next example is
-"[iterative-server](https://github.com/PasiSa/AdvancedNetworking/tree/main/examples/rust/iterative-server/src/main.rs)"
+**[iterative-server](https://github.com/PasiSa/AdvancedNetworking/tree/main/examples/rust/iterative-server/src/main.rs)**
 that demonstrates the use of _mio_ (you may want to open the code in a parallel
 window while reading this section). The server just reads incoming data from
 socket and echoes it back. Different from the earlier implementation, the server
@@ -188,7 +188,7 @@ then restarting netcat.
 
 Sometimes an easier option is to spawn a separate thread for each client. As we
 see in the
-"[threaded-server](https://github.com/PasiSa/AdvancedNetworking/tree/main/examples/rust/threaded-server/src/main.rs)"
+**[threaded-server](https://github.com/PasiSa/AdvancedNetworking/tree/main/examples/rust/threaded-server/src/main.rs)**
 example, for our simple echo server the code indeed is rather short and simple,
 compared to the iterative server. However, there are a few things to consider
 before applying multiple threads for server logic. First, spawning a separate
@@ -219,10 +219,21 @@ events. The read and write calls may block, but they only block the current
 thread and therefore do not harm the other clients or prevent listening socket
 from accepting new connections.
 
-### Async / await
+### Collaborative multitasking
 
-A third option is to apply collaborative concurrency with async/await method
-provided by **[Tokio](https://tokio.rs/)**. We will skip the details from this
-material for now (but something might be available later, who knows). However,
-there is a [Rust book about **Asynchronous
-Programming**](https://rust-lang.github.io/async-book/) about this topic.
+In collaborative multitasking, the program code voluntarily indicates locations
+where it can yield execution to other tasks. This differs from multi-threaded
+operation, where the operating system scheduler can reschedule another thread
+preemptively at any time.
+
+In Rust, collaborative multitasking is provided by the
+**[Tokio](https://crates.io/crates/tokio)** crate. It adds a small runtime
+component alongside the main function that takes care of the task scheduling,
+and `async` keyword that is used to indicate an asynchronous function that can
+be interrupted on locations with `await` keyword. Example
+**[async-server](https://github.com/PasiSa/AdvancedNetworking/tree/main/examples/rust/async-server/src/main.rs)**
+shows how this is done. The implementation looks similar to the threaded server,
+but now applies Tokio and collaborative multitasking concepts.
+
+There is more information about this topic in a Rust book about **[Asynchronous
+Programming](https://rust-lang.github.io/async-book/)**.

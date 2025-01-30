@@ -49,3 +49,9 @@
   Similar to
   [iterative-server](https://github.com/PasiSa/AdvancedNetworking/tree/main/examples/rust/iterative-server/src/main.rs),
   but spawns a new thread for each active client.
+
+- **[async-server](https://github.com/PasiSa/AdvancedNetworking/tree/main/examples/rust/async-server/src/main.rs)**:
+  Similar to
+  [threaded-server](https://github.com/PasiSa/AdvancedNetworking/tree/main/examples/rust/threaded-server/src/main.rs)
+  but applies collaborative multitasking using Rust's **[tokio
+  crate](https://crates.io/crates/tokio)**.
