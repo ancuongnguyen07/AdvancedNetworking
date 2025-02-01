@@ -1,23 +1,20 @@
 /*  You may start from this template when implementing the task,
     or use entirely own code.
+    This template assumes that each client is handled in a separate thread.
  */
 
 use std::{
+    error::Error,
     io::{Read, Write},
-    net::TcpStream,
-    time::Instant,
+    net::{SocketAddr, TcpStream, TcpListener},
+    thread,
 };
-
-use mio::{Events, Interest, Poll, Token};
-use mio::net::TcpListener;
-
-use crate::tokenmanager::TokenManager;
 
 
 /// Separate struct for each client might be useful.
 /// Feel free to modify as needed.
 struct Client {
-    socket: mio::net::TcpStream,  // Active socket accepted from listening socket
+    socket: TcpStream,  // Active socket accepted from listening socket
     address: SocketAddr,  // Peer address of the client socket
     written: u32,  // How many bytes written so far
     total: u32,  // How many bytes we should write in total
@@ -34,28 +31,26 @@ fn main() {
         - Write command message to socket: "TASK-002 keyword IP:port"
      */
 
-    // Set up MIO event engine for handling concurrent I/O operations.
-    // (modify the below lines as needed)
-    let mut tokenmanager = TokenManager::new();
-    let mut poll = Poll::new()?;
-    let mut events = Events::with_capacity(128);
-
-    let listen_token = tokenmanager.allocate_token();
-    poll.registry()
-        .register(&mut listen_socket, listen_token, Interest::READABLE)?;
-
-    // It is good idea to store the active tokens and clients in a collection,
-    // such as HashMap.
-    let mut clients: HashMap<Token, Client> = HashMap::new();
-
     loop {
         /* TODO:
-            - Wait for next MIO event
-            - Check if listening socket has a readable event. If yes, accept
-              new active socket, create a token for it and register the token
-            - For newly accepted client read number of bytes and character
-            - Write the requested bytes. Note that you cannot write everything
-              in single write.
+            - Accept next incoming connection
+            - Create a Client instance for the new client connection
+            - Spawn a thread to handle communication (in process_client function),
+              move the client instance ownership to the thread
          */
+    }
+}
+
+
+// This function is started in spawned thread
+fn process_client(mut client: Client) {
+    loop {
+        /* TODO:
+            - Read 32-bit value for transfer length, convert from network byte order.
+              If connection is closed, return from function (will terminate thread)
+            - Read the byte that should be used to fill the written content
+            - Write the requested number of bytes. Single write call will not be enough.
+            */
+        println!("Wrote {} bytes of character {}", client.written, client.character);
     }
 }
