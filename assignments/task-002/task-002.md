@@ -63,6 +63,6 @@ lines of the above mentioned "`Wrote N bytes of byte B`" messages.
   and vice versa using `from_be_bytes`
   ([example](https://doc.rust-lang.org/std/primitive.u32.html#method.from_be_bytes))
 
-- See the different server **[examples](/examples)** for different
+- See the different server **[examples](https://pasisa.github.io/AdvancedNetworking/examples/)** for different
   design alternatives (non-blocking events, thread-based, collaborative
-  multitasking). Which one would be most suitable in this case
+  multitasking). Which one would be most suitable in this case?
