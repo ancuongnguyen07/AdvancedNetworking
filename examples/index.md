@@ -6,6 +6,12 @@
   Shows basic operation of opening a socket and reading some data from it.
   Modified from W.R. Stevens' Unix Network Programming book.
 
+- **[daytime-serv.c](https://github.com/PasiSa/AdvancedNetworking/tree/main/examples/c/daytime-serv.c)**:
+  Demonstrates a simple server socket, a counterpart of
+  [daytime-cli.c](https://github.com/PasiSa/AdvancedNetworking/tree/main/examples/c/daytime-cli.c),
+  that accepts a TCP connection and writes the current date and time to the
+  accepted socket. Modified from W.R. Stevens' Unix Network Programming book.
+
 - **[simple-client.c](https://github.com/PasiSa/AdvancedNetworking/tree/main/examples/c/simple-client.c)**:
   Demonstrates socket connection and name resolution, then writes and reads
   something from the socket. Modified from W.R. Stevens' Unix Network
