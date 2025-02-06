@@ -1,6 +1,6 @@
 # List of examples
 
-## C
+## TCP in C
 
 - **[daytime-cli.c](https://github.com/PasiSa/AdvancedNetworking/tree/main/examples/c/daytime-cli.c)**:
   Shows basic operation of opening a socket and reading some data from it.
@@ -17,7 +17,7 @@
   something from the socket. Modified from W.R. Stevens' Unix Network
   Programming book.
 
-## Rust
+## TCP in Rust
 
 - **[simple-client](https://github.com/PasiSa/AdvancedNetworking/tree/main/examples/rust/simple-client/src/main.rs)**:
   Opens connection, then writes and reads a bit of data. Should be equivalent
@@ -61,3 +61,10 @@
   [threaded-server](https://github.com/PasiSa/AdvancedNetworking/tree/main/examples/rust/threaded-server/src/main.rs)
   but applies collaborative multitasking using Rust's **[tokio
   crate](https://crates.io/crates/tokio)**.
+
+## UDP
+
+- **[simple-udp](https://github.com/PasiSa/AdvancedNetworking/tree/main/examples/rust/simple-udp/src/main.rs)**:
+  Simple UDP example where client reads input from user and sends it to UDP
+  server, then reads a response back. Server echoes the datagram it receives
+  back to client. Both client and server implementations are in the same code.

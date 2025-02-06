@@ -35,6 +35,8 @@ Links to currently available content:
 
 - **[Server sockets and concurrent connections](server-sockets.md)**
 
+- **[UDP and datagram sockets](udp.md)**
+
 - **[Small code examples in C and Rust](examples/index.md)**
 
 ## Assignments
