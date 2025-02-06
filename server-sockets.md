@@ -98,14 +98,16 @@ the server implementation waiting forever for a `read` call to complete, and
 therefore not being able to respond to other clients. There are different
 strategies to design such server.
 
-### Iterative event handling
+### I/O multiplexing with non-blocking sockets
 
 Multiple sockets can be handled one at a time in an iterative loop in a
 single thread. Sockets can be made **non-blocking** in which case they return a
 specific **WouldBlock** error whenever the call (e.g. `read` or `write`) would
 not be able to return immediately. The Posix C API has functions such as
 `select` or `poll` that can be used to wait simultaneously multiple event from
-any of the specified sockets.
+any of the specified sockets. In addition there are system-specific, more
+efficient variants such as `epoll` in Linux or `kqueue` in BSD-based systems and
+MacOS.
 
 In Rust, [mio](https://docs.rs/crate/mio) is a library (or "crate" in Rust
 terminology) that encapsulates the non-blocking socket operation into fairly
@@ -192,12 +194,13 @@ see in the
 example, for our simple echo server the code indeed is rather short and simple,
 compared to the iterative server. However, there are a few things to consider
 before applying multiple threads for server logic. First, spawning a separate
-thread is a little heavier operation, and involves the operating system that
+thread costs some execution time from the operating system, that
 manages the threads in the system. In addition, if application logic requires
 the different threads to access shared data, one should be careful that the
-concurrent operations do not cause inconsistencies in data modifications, for
-example by preventing concurrent modifications of critical shared data by
-semaphores. This is not the case in our example, though, where each session is
+concurrent operations do not cause inconsistencies in data modifications,
+and defects due to data inconsistency that may be difficult to track. For
+example, access to critical shared data can be protected by `Mutex` type in
+Rust. This is not the case in our example, though, where each session is
 independent of each other.
 
 As before our `main` function starts by parsing the address to bind to from
