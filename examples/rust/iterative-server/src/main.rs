@@ -14,7 +14,7 @@ use std::{
     env,
     error::Error,
     io::{Read, Write},
-    net::{SocketAddr},
+    net::SocketAddr,
 };
 
 use mio::{

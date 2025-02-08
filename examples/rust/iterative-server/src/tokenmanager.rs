@@ -20,15 +20,27 @@ impl TokenManager {
 
     /// Allocate an unused token.
     pub fn allocate_token(&mut self) -> Token {
-        if let Some(token) = self.free_tokens.pop() {
-            self.used_tokens.insert(token);
+        // Original implementation
+        // if let Some(token) = self.free_tokens.pop() {
+        //     self.used_tokens.insert(token);
+        //     token
+        // } else {
+        //     let token = Token(self.next);
+        //     self.next += 1;
+        //     self.used_tokens.insert(token);
+        //     token
+        // }
+
+        // More Rustic implementation
+        let used_token = if let Some(token) = self.free_tokens.pop() {
             token
         } else {
             let token = Token(self.next);
             self.next += 1;
-            self.used_tokens.insert(token);
             token
-        }
+        };
+        self.used_tokens.insert(used_token);
+        used_token
     }
 
     /// Release a token.
