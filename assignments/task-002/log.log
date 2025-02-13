@@ -1,0 +1,46 @@
+Task 2 starting
+Wrote the first message to server
+Accepting conncection from 10.0.0.3:58590
+Read 5 bytes from client 10.0.0.3:58590
+Total expected bytes: 216297
+Character to write: 71
+Accepting conncection from 10.0.0.3:58604
+Accepting conncection from 10.0.0.3:58618
+Read 5 bytes from client 10.0.0.3:58604
+Total expected bytes: 212615
+Character to write: 81
+Read 5 bytes from client 10.0.0.3:58618
+Total expected bytes: 196270
+Character to write: 67
+--------------------------------------------------
+Regarding client 10.0.0.3:58590
+Wrote 216297 bytes of byte 71
+--------------------------------------------------
+--------------------------------------------------
+Regarding client 10.0.0.3:58604
+Wrote 212615 bytes of byte 81
+--------------------------------------------------
+--------------------------------------------------
+Regarding client 10.0.0.3:58618
+Wrote 196270 bytes of byte 67
+--------------------------------------------------
+Read 5 bytes from client 10.0.0.3:58590
+Total expected bytes: 202414
+Character to write: 82
+Read 5 bytes from client 10.0.0.3:58618
+Total expected bytes: 217086
+Character to write: 82
+--------------------------------------------------
+Regarding client 10.0.0.3:58618
+Wrote 217086 bytes of byte 82
+--------------------------------------------------
+Read 5 bytes from client 10.0.0.3:58604
+Total expected bytes: 225209
+Character to write: 84
+--------------------------------------------------
+Regarding client 10.0.0.3:58604
+Wrote 225209 bytes of byte 84
+--------------------------------------------------
+Client 10.0.0.3:58618 closed connection
+Client 10.0.0.3:58590 closed connection
+Client 10.0.0.3:58604 closed connection
