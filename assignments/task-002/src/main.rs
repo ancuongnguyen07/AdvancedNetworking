@@ -6,8 +6,8 @@
 use std::{
     error::Error,
     io::{Read, Write},
-    net::{SocketAddr, TcpStream, TcpListener},
-    thread,
+    net::{SocketAddr, TcpListener, TcpStream},
+    thread, vec,
 };
 
 
@@ -22,7 +22,13 @@ struct Client {
 }
 
 
-fn main() {
+fn main() -> Result<(), Box<dyn Error>> {
+    const ADGENT_SERVER: &str = "10.0.0.3:12345";
+    // ip address of lh1, choose the port 2025
+    let server_addr: &str = "10.0.0.1:2025";
+    let message: String = String::from("TASK-002 daisy ") + server_addr;
+
+
     println!("Task 2 starting");
 
     /* TODO:
@@ -31,6 +37,12 @@ fn main() {
         - Write command message to socket: "TASK-002 keyword IP:port"
      */
 
+    let mut socket = TcpStream::connect(ADGENT_SERVER)?;
+    // first message
+    socket_write_message(&mut socket, message.as_bytes())?;
+
+    println!("Wrote the first message to server");
+    let server = TcpListener::bind(&server_addr)?;
     loop {
         /* TODO:
             - Accept next incoming connection
@@ -38,7 +50,35 @@ fn main() {
             - Spawn a thread to handle communication (in process_client function),
               move the client instance ownership to the thread
          */
+        let (socket, address) = server.accept()?;
+        println!("Accepting conncection from {}", address.to_string());
+
+        let client= Client {
+            socket,
+            address,
+            written: 0,
+            total: 0,
+            character: 0,
+        };
+
+        thread::spawn(move || process_client(client));
     }
+}
+
+fn socket_write_message(socket: &mut TcpStream, message: &[u8]) -> Result<(), Box<dyn Error>> {
+    let mut written_bytes = 0;
+    loop {
+        let n = socket.write(message.get(written_bytes..).ok_or("out of index")?)?;
+        written_bytes += n;
+        if written_bytes == message.len() {
+            break;
+        } else if written_bytes > message.len() {
+            return Err("Wrote more bytes than message length".into());
+        }
+
+        println!("Did not write all bytes of the first message, trying again");
+    }
+    Ok(())
 }
 
 
@@ -51,6 +91,55 @@ fn process_client(mut client: Client) {
             - Read the byte that should be used to fill the written content
             - Write the requested number of bytes. Single write call will not be enough.
             */
-        println!("Wrote {} bytes of character {}", client.written, client.character);
+
+        let mut read_buffer: [u8; 5] = [0; 5];
+        match client.socket.read(&mut read_buffer) {
+            Ok(n) => {
+                if n == 0 {
+                    println!("Client {} closed connection", client.address);
+                    break;
+                }
+
+                if n != 5 {
+                    println!("Invalid data length, expected 5 bytes, got {}", n);
+                    break;
+                }
+                println!("Read {} bytes from client {}", n, client.address);
+
+
+                // length data, the first 4 bytes
+                client.total = u32::from_be_bytes(read_buffer[0..4].try_into().unwrap());
+                client.character  = read_buffer[4];
+
+                println!("Total expected bytes: {}", client.total);
+                println!("Character to write: {}", client.character);
+
+                // write data to socket
+                let length = client.total;
+                let character = client.character;
+                let write_buffer: Vec<u8> = vec![character; length as usize];
+                loop {
+                    if client.written >= length {
+                        break;
+                    }
+                    let n = client.socket.write(write_buffer.get(client.written as usize..).unwrap()).unwrap();
+                    client.written += n as u32;
+                    
+
+                    println!("--------------------------------------------------");
+                    println!("Regarding client {}", client.address.to_string());
+                    println!("Wrote {} bytes of byte {}", client.written, client.character);
+                    println!("--------------------------------------------------");
+                }
+
+            },
+            Err(e) => {
+                println!("Error reading from socket {}: {}", client.address.to_string(), e);
+                break;
+            }
+        };
+
+        
+
     }
 }
