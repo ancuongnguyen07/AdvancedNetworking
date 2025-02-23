@@ -61,5 +61,5 @@ The assignments are as follows:
 - [Task 1: Simple client](assignments/task-001/task-001.md)
 - [Task 2: TCP server](assignments/task-002/task-002.md)
 - [Task 3: Data transfer using UDP](assignments/task-003/task-003.md)
-- [Task: QUIC analysis](assignments/task-quic.md)
+- [Task: Experimenting with QUIC](assignments/task-quic.md)
 - _some more may be coming here..._

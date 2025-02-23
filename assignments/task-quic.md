@@ -59,6 +59,9 @@ address spaces in the Mininet environment.
 When the transfer is concluded there should be two files with `.sqlog` suffix in
 your quiche directory, for client- and server-side qlogs. You can use the
 **[Qvis tool](https://qvis.quictools.info/)** to visualize and analyze the logs.
+In the "_Manage files_" tab, use Option 2 to upload your qlogs. Then, the
+"_Sequence_" and "_Multiplexing_" tabs will be useful for the following
+questions.
 
 In MyCourses, answer the following questions:
 
@@ -68,10 +71,11 @@ In MyCourses, answer the following questions:
   that mean. An old [paper by Karn and
   Partridge](https://dl.acm.org/doi/10.1145/55483.55484) discusses this issue.
 
-- Does QUIC suffer from retransmission ambiguity similarly to TCP? Justify. How
-  do you recognize retransmitted data in qlog and qvis analysis tool? Hint: See
-  **[RFC 9000](https://datatracker.ietf.org/doc/html/rfc9000)** and sections 12
-  (Packets and Frames) and 13 (Packetization and Reliability) for more
+- Does QUIC suffer from retransmission ambiguity similarly to TCP? Justify why.
+
+- How do you recognize retransmitted data in qlog and qvis analysis tool? Hint:
+  See **[RFC 9000](https://datatracker.ietf.org/doc/html/rfc9000)** and sections
+  12 (Packets and Frames) and 13 (Packetization and Reliability) for more
   information.
 
 - Earlier different strategies for handing concurrent I/O sources were discussed
@@ -79,7 +83,7 @@ In MyCourses, answer the following questions:
   approaches). How does **quiche-server** handle concurrency?
 
 - What stream IDs are used to transfer the data files? If there was a fourth
-  file, what would be the stream ID? Why are these stream IDs used? Hint: See
+  file, what would likely be the stream ID? Why are these stream IDs used? Hint: See
   **[RFC 9000](https://datatracker.ietf.org/doc/html/rfc9000)** and section 2
   about streams for more information.
 
@@ -91,10 +95,11 @@ file is useful for the client as soon as possible. Adjust the stream priorities
 so that `file-C.txt` gets higher priority than others, but so that
 transmission of all streams starts as soon as possible.
 
-Report in MyCourses at what time does each file transfer start and when it is
-completed before and after the priority adjustment. Provide also the command
-line you used, and the resulting qlog file from client side. More information
-about stream priorities can be found in
+In MyCourses, report the start and completion times of each stream transfer for
+all three files, both before and after the priority adjustment. Additionally,
+provide the command line used to start the client and include the resulting qlog
+file from the client.
+More information about stream priorities can be found in
 **[RFC 9218](https://datatracker.ietf.org/doc/html/rfc9218)**.
 You will need the `--send-priority-update` option in `quiche-client` command
 line, and add some query parameters to the HTTP URLs. You can use the `--help`
