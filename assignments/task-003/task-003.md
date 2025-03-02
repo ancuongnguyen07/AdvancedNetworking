@@ -54,7 +54,7 @@ You should repeat the assignment applying the following three scenarios:
    the transmission speed:
    `sudo aalto/simple_topo.py --delay=200ms`
 
-2. **Slow transmitter** The bottleneck link has one-way delay of 50 ms, but
+2. **Slow bottleneck** The bottleneck link has one-way delay of 50 ms, but
    transmission speed is limited to 100 kbps:
    `sudo aalto/simple_topo.py --delay=50ms --bw=0.1`
 
