@@ -5,6 +5,12 @@ can be used to implement IP tunnels between two end points, and play around with
 it a bit. The assignment is split into five phases, each containing questions
 that you should answer in MyCourses.
 
+There is a Rust
+**[task template](https://github.com/PasiSa/AdvancedNetworking/tree/main/assignments/task-tun)**
+available, if you want to use the Rust **[tun crate](https://crates.io/crates/tun)**
+to implement this task. The template has some placeholders for MIO event
+multiplexing, but can use also other approach.
+
 ## Phase 1: Setting up namespace environment
 
 Let's set up a simple network environment without Mininet this time on which we
@@ -39,6 +45,8 @@ at `/dev/net/tun` which you can read and write using normal I/O operations. In
 this case you will also need to set the IP address and other interface
 parameters to the created TUN interface by other means, for example using the
 `ip` tool in command line shell.
+
+![Network setup in assignment](namespaces.png "Network setup in assignment")
 
 Note that you need to handle two input sources concurrently in your program: the
 UDP socket, and the TUN device end point. You can apply any of the approaches
@@ -160,10 +168,12 @@ In the `ns1` namespace, we will also need to configure the DNS server:
 
     bash -c 'echo "nameserver 8.8.8.8" > /etc/netns/ns1/resolv.conf
 
-This is a public DNS server maintained by Google.
+At 8.8.8.8 there is a public DNS server maintained by Google. `resolv.conf` is
+the location where nameservers are configured in Linux. Different network
+namespaces can also have separate configuration domains, as we have here.
 
-Try a couple of HTTP requests using curl, assuming that now all traffic is
-forwarded using your mangled tunnel:
+From inside the namespace, try a couple of HTTP requests using curl, assuming
+that now all traffic is forwarded through your special tunnel:
 
     curl https://www.taylorswift.com
     curl https://en.wikipedia.org/wiki/Zachary_Taylor

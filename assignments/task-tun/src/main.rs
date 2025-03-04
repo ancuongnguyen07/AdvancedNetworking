@@ -1,3 +1,9 @@
+// Because there are two input sources (TUN device and UDP socket),
+// MIO or tokio multitasking is needed for parallel waiting from
+// different sources. You may also try to use threads.
+use mio::{ Events, Interest, Poll, net::UdpSocket, Token };
+
+
 fn main() -> std::io::Result<()> {
     // Create and configure the TUN device
     let mut config = tun::Configuration::default();
