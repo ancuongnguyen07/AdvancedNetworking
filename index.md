@@ -37,6 +37,8 @@ Links to currently available content:
 
 - **[UDP and datagram sockets](udp.md)**
 
+- **[Linux networking](linux-tcpip.md)**
+
 - **[Small code examples in C and Rust](examples/index.md)**
 
 ## Assignments
