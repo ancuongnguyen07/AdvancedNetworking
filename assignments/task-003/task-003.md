@@ -36,6 +36,9 @@ content:
   of the last acknowledgment finishing the transmission. This number will
   be asked in the MyCourses task assignment for grading.
 
+If you use Rust to implement your program, the [assignment
+template](https://github.com/PasiSa/AdvancedNetworking/tree/main/assignments/task-003)
+may turn out to be useful.
 You should run your implementation in three different mininet configurations, as
 described below. Be prepared to the possibility that some of the datagrams may
 be lost in the network and in such case need to be retransmitted. The queue
@@ -45,13 +48,13 @@ according to some strategy. You may study how TCP takes care of this, but it is
 not required to implement a full-fledged modern congestion control algorithm.
 Something simple suffices.
 
-You should repeat the assignment applying the following four scenarios:
+You should repeat the assignment applying the following three scenarios:
 
 1. **Long delay**. The bottleneck link has one-way delay of 200 ms, no limits on
    the transmission speed:
    `sudo aalto/simple_topo.py --delay=200ms`
 
-2. **Slow transmitter** The bottleneck link has one-way delay of 50 ms, but
+2. **Slow bottleneck** The bottleneck link has one-way delay of 50 ms, but
    transmission speed is limited to 100 kbps:
    `sudo aalto/simple_topo.py --delay=50ms --bw=0.1`
 
@@ -59,7 +62,12 @@ You should repeat the assignment applying the following four scenarios:
    rate is 10%:
    `sudo aalto/simple_topo.py --delay=200ms --loss=10`
 
+In your response, you should report the one-byte number code in last
+acknowledgment. In addition, describe your approach for retransmissions and rate
+control, to avoid congestion.
+
 The assignment is successful if you can get acknowledgments for all datagrams in
 all three scenarios. Measure also the time from the start of the transfer until
-last acknowledgment is received. There is a lighthearted competition on who can
-implement the most efficient protocol (not affecting grading).
+last acknowledgment is received, and tell that in your response. There is a
+lighthearted competition on who can implement the most efficient protocol (not
+affecting grading).
